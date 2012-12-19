@@ -28,6 +28,7 @@
 #include "version.h"
 #include "gtkconv.h"
 #include "gtkplugin.h"
+#include "gtkutils.h"
 
 /*start taken from gtkconv.c*/
 
@@ -152,7 +153,7 @@ static void close_offline_tabs_cb(GtkWidget *w, GObject *menu)
 
 static void create_close_offline_menu_item_pidgin(PidginConversation *gtkconv)
 {
-    GtkWidget *item, *menu;
+    GtkWidget *item, *menu, *separator;
     PidginWindow *win;
     GtkNotebook *notebook;
    
@@ -166,6 +167,7 @@ static void create_close_offline_menu_item_pidgin(PidginConversation *gtkconv)
         return;
     }
 
+    separator = pidgin_separator(menu);
     item = gtk_menu_item_new_with_label("Close offline tabs");
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), item);
     g_signal_connect(G_OBJECT(item), "activate",
@@ -175,24 +177,30 @@ static void create_close_offline_menu_item_pidgin(PidginConversation *gtkconv)
 
     g_object_set_data(G_OBJECT(win->notebook), "close_offline",
                           item);
+    g_object_set_data(G_OBJECT(win->notebook), "close_offline_separator",
+                          separator);
 
 }
 
 static void remove_close_offline_menu_item_pidgin(PidginConversation *gtkconv)
 {
-    GtkWidget *item;
+    GtkWidget *item, *separator;
     PidginWindow *win;
    
     win = gtkconv->win;
     
     item = g_object_get_data(G_OBJECT(win->notebook), "close_offline");
-    if (item != NULL){
+    if (item == NULL){
         return;
     }
+    separator = g_object_get_data(G_OBJECT(win->notebook), "close_offline_separator");
     if (item != NULL) {
         gtk_widget_destroy(item);
         g_object_set_data(G_OBJECT(win->notebook),
                           "close_offline", NULL);
+        gtk_widget_destroy(separator);
+        g_object_set_data(G_OBJECT(win->notebook),
+                          "close_offline_separator", NULL);
     }
 }
 

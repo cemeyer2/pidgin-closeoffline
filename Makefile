@@ -7,12 +7,12 @@ LDFLAGS= -shared
 INCLUDES = \
       $(GTK_PIDGIN_INCLUDES)
 
-all: clean closeoffline.so
+all: build-dep clean closeoffline.so
 
 closeoffline.so: closeoffline.c
 	gcc closeoffline.c $(CFLAGS) $(INCLUDES) $(LDFLAGS) -o closeoffline.so
 
-debug: clean closeoffline.c
+debug: build-dep clean closeoffline.c
 	clang closeoffline.c $(CFLAGS_DEBUG) $(INCLUDES) $(LDFLAGS) -o closeoffline.so
 
 install: closeoffline.so

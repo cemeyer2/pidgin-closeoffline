@@ -4,8 +4,8 @@ pidgin-closeoffline
 Pidgin plugin to close tabs of buddies that are offline
 
 Build scripts are primitive so far and have only been tested on Ubuntu 12.04.1
-32 bit and 64 bit, but should work on most recent Ubuntu editions. Simply run
-the 
+32 bit and 64 bit, as well as Ubuntu 12.10 64 bit, but should work on most 
+recent Ubuntu editions. Simply run the 
 
     install_ubuntu.sh
 
